@@ -2,8 +2,6 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { Buffer } from 'buffer';
-import process from 'process';
-
 
 const decodedFirebaseCredentials = Buffer.from(process.env.REACT_APP_FIREBASE_CREDENTIALS, "base64").toString("utf-8");
 const firebaseConfig = JSON.parse(decodedFirebaseCredentials);

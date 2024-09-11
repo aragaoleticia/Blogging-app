@@ -11,16 +11,13 @@ function CreatePost() {
     const postsCollectionRef = collection(db, 'posts');
 
     const submitPost = async () => {
-        try{
-            await addDoc(postsCollectionRef, {
-                title,
-                postText,
-                author: { name: auth.currentUser.displayName, id: auth.currentUser.uid}
-            });
-            console.log('Posto sucessfully added!')
-        } catch (error) {
-            console.error('Eror adding post', error)
-        }
+        await addDoc(postsCollectionRef, {
+            title,
+            postText,
+            author: { name: auth.currentUser.displayName, id: auth.currentUser.uid}
+        });
+        setTitle('');
+        setPostText('');
     };
 
   return (

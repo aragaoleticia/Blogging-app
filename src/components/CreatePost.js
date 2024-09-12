@@ -22,7 +22,7 @@ function CreatePost() {
 
   return (
     <div className='w-full grid items-center justify-center'>
-      <div className='w-[500px] h-aut p-5 bg-black rounded-lg text-white flex flex-col'>
+      <div className='w-[500px] h-auto p-5 bg-black rounded-lg text-white flex flex-col'>
         <h1 className='text-center text-lg font-semibold'>Create a post</h1>
         <div className='mt-[30px] flex flex-col'>
             <label>Title:</label>

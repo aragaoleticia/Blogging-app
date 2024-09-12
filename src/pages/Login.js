@@ -36,7 +36,7 @@ function Login({ setIsAuth, isAuth }) {
         alt="Google logo"
         className="w-6 h-6 mr-3"
       />
-      Sign in with Google kkkkkkkk
+      Sign in with Google
     </button>
     </div>
   )

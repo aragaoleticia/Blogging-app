@@ -4,7 +4,6 @@ import Login from './pages/Login';
 import { useState } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from './firebase.config';
-import CreatePost from './components/CreatePost';
 
 function App() {
 
@@ -29,8 +28,7 @@ function App() {
           : 
           <button onClick={signUserOut}>Log out</button>
         }
-      </nav>
-      {isAuth && <CreatePost/>}         
+      </nav>         
       <Routes>
         <Route path='/' element={<Home isAuth={isAuth}/>} />
         <Route path='/login' element={<Login setIsAuth={setIsAuth} isAuth={isAuth}/>} />

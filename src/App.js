@@ -1,13 +1,12 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import { useState } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from './firebase.config';
+import { useIsAuth } from './hooks/usePosts'
 
 function App() {
-
-  const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'));
+  const [isAuth, setIsAuth] = useIsAuth();
 
   const signUserOut = () => {
     signOut(auth).then(() => {
@@ -16,8 +15,6 @@ function App() {
       window.location.pathname = '/login'
     })
   }
-
-
 
   return (
     <Router>

@@ -1,49 +1,19 @@
 import React, { useState } from 'react';
-import { addDoc, collection } from 'firebase/firestore';
-import { auth, db } from '../firebase.config';
+import { useSubmitPost, usePosts } from '../hooks/usePosts';
 
 function CreatePost() {
 
+    const [setPostsList] = usePosts();
+    const submitPost = useSubmitPost(setPostsList);
+
     const [title, setTitle] = useState('');
     const [postText, setPostText] = useState('');
-
-    const postsCollectionRef = collection(db, 'posts');
-
-    const submitPost = async (event) => {
-        event.preventDefault();
-        const post = {
-            title,
-            postText,
-            author: { 
-                name: auth.currentUser.displayName, 
-                id: auth.currentUser.uid
-            }
-        }
-        try {
-            await addDoc(postsCollectionRef, post);
-
-            setTitle('');
-            setPostText('');
-        } catch (error) {
-            console.log('Error submitting post:', error);
-        };
-    };
-
-    // const submitPost = async () => {
-    //     await addDoc(postsCollectionRef, {
-    //         title,
-    //         postText,
-    //         author: { name: auth.currentUser.displayName, id: auth.currentUser.uid}
-    //     });
-    //     setTitle('');
-    //     setPostText('');
-    // };
 
   return (
     <div className='w-full grid items-center justify-center'>
       <div className='w-[500px] h-auto p-5 bg-black rounded-lg text-white flex flex-col'>
         <h1 className='text-center text-lg font-semibold'>Create a post</h1>
-        <form onSubmit={() => submitPost()}>
+        <form onSubmit={(e) => submitPost(e, title, postText, setTitle, setPostText)}>
         <div className='mt-[30px] flex flex-col'>
                 <label>Title:</label>
                 <input 

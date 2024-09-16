@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import { signOut } from 'firebase/auth';
 import { auth } from './firebase.config';
 import { useIsAuth } from './hooks/usePosts'
+import UserProfile from './pages/UserProfile';
 
 function App() {
   const [isAuth, setIsAuth] = useIsAuth();
@@ -23,11 +24,15 @@ function App() {
         {!isAuth ? 
           <Link to='/login'>Login</Link> 
           : 
+          <>
+          <Link to='/profile'>Profile</Link>
           <button onClick={signUserOut}>Log out</button>
+          </>
         }
       </nav>         
       <Routes>
         <Route path='/' element={<Home isAuth={isAuth}/>} />
+        <Route path='/profile' element={<UserProfile isAuth={isAuth}/>}/>
         <Route path='/login' element={<Login setIsAuth={setIsAuth} isAuth={isAuth}/>} />
       </Routes>
     </Router>

@@ -25,7 +25,6 @@ function CreatePostText({postsList, setPostsList}) {
            const newPost = {...post, id: docRef.id};
 
            const newPosts = [...postsList, newPost]
-           console.log("new post : " + JSON.stringify(newPosts))
 
            setPostsList(newPosts); 
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getDocs, collection, deleteDoc, doc} from 'firebase/firestore';
 import { db } from '../firebase.config';
 
@@ -12,6 +12,23 @@ export async function initializePosts() {
     const posts = data.docs.map((doc) => ({...doc.data(), id: doc.id}))
     return posts || [];
 }
+
+
+export function useFetchPost() {
+  const [postsList, setPostsList] = useState([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+        const posts = await initializePosts();
+        setPostsList(posts);
+    };
+
+    fetchPosts()
+  }, []);
+
+  return [postsList, setPostsList]
+}
+
 
 
 export function useDeletePost(setPostsList) {

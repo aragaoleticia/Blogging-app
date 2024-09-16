@@ -1,63 +1,17 @@
-import { useEffect, useState } from 'react';
-import { getDocs, collection, deleteDoc, doc, addDoc } from 'firebase/firestore';
-import { db, auth } from '../firebase.config';
+import { useState } from 'react';
+import { getDocs, collection, deleteDoc, doc} from 'firebase/firestore';
+import { db } from '../firebase.config';
 
 
 
 
 const postsCollectionRef = collection(db, 'posts');
 
-async function initializePosts() {
+export async function initializePosts() {
     const data = await getDocs(postsCollectionRef);
     const posts = data.docs.map((doc) => ({...doc.data(), id: doc.id}))
-    return posts ? posts : [];
+    return posts || [];
 }
-
-
-export function usePosts() {
-
-    const [postsList, setPostsList] = useState([]);
-
-    useEffect(() => {
-        const fetchPosts = async () => {
-            const posts = await initializePosts();
-            setPostsList(posts)
-        }
-
-        fetchPosts();
-    }, [])
-
-    return [postsList, setPostsList];
-};
-
-
-export function useSubmitPost(setPostsList) {
-
-    const submitPost = async (event, title, postText, setTitle, setPostText) => {
-        event.preventDefault();
-        const post = {
-            title,
-            postText,
-            author: { 
-                name: auth.currentUser.displayName, 
-                id: auth.currentUser.uid
-            }
-        }
-        try {
-           const docRef = await addDoc(postsCollectionRef, post);
-
-           const newPost = {...post, id: docRef.id};
-           setPostsList((prevPostsList) => [newPost, ...prevPostsList]);
-           setPostText('');
-           setTitle('');
-
-        } catch (error) {
-            console.log('Error submitting post:', error);
-        };
-    };
-
-    return submitPost;
-};
 
 
 export function useDeletePost(setPostsList) {
@@ -80,6 +34,5 @@ export function useDeletePost(setPostsList) {
 
 export function useIsAuth() {
     const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'));
-
     return [isAuth, setIsAuth];
 };

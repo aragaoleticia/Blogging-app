@@ -1,18 +1,27 @@
 import React from 'react';
-import { usePosts, useIsAuth, useDeletePost } from '../hooks/usePosts';
+import { useIsAuth, useDeletePost } from '../hooks/usePosts';
 import { auth } from '../firebase.config';
 
 
-function Posts() {
-  const [postsList, setPostsList] = usePosts();
+function Posts({postsList, setPostsList}) {
   const [isAuth] = useIsAuth();
   const deletePost = useDeletePost(setPostsList);
 
-  console.log(postsList.map(post => post.id))
+  console.log("post list " + JSON.stringify(postsList))
+
+  
+  if(postsList === null) {
+    return <div>Loading posts....</div>
+  }
+
+  if(postsList.length === 0) {
+    return <div>No posts available.</div>
+  }
+  
 
   return (
     <div>
-      {postsList.map((post) => (
+      {(postsList || []).map((post) => (
         <div key={post.id} className='w-[600px] h-auto max-h-[600px] bg-gray-100 shadow-md m-5 p-5 rounded-lg'>
           <div className='flex justify-center w-full'>
             <div className='flex-[50%] text-2xl font-semibold'>

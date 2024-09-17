@@ -1,7 +1,5 @@
 import React from 'react';
 
-
-
 function Posts({postsList}) {
 
   
@@ -22,24 +20,10 @@ function Posts({postsList}) {
             <div className='flex-[50%] text-2xl font-semibold'>
               {post.title}
             </div>
-            {/* <div className='flex felx-col items-end'>
-                {isAuth && post.author.id === auth.currentUser.uid && (
-                  <button 
-                    onClick={(event) => {
-                      event.stopPropagation(); 
-                      deletePost(post.id)
-                    }
-                    }
-                    className='border-none bg-none text-[30px] cursor-pointer'
-                  >
-                    &#128465;
-                  </button>
-                )
-                }
-              </div> */}
           </div>
             <div className='break-words h-auto max-h-[400px] w-full overflow-hidden overflow-y-auto'>
                   {post.postText}
+                  <img src={post.author.photo}/>
                   <h3>@{post.author.name}</h3>
             </div>
         </div>

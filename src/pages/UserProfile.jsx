@@ -4,7 +4,7 @@ import { auth } from '../firebase.config';
 
 function UserProfile() {
     const [isAuth] = useIsAuth();
-    const [postsList, setPostsList] = useFetchPost();
+    const [postsList, setPostsList] = useFetchPost(isAuth);
     const deletePost = useDeletePost(setPostsList);
 
 
@@ -13,6 +13,7 @@ function UserProfile() {
         : [];
 
 
+    console.log(auth.currentUser.photoURL)
     if(userPosts.length === 0) {
         return <div>No posts available.</div>
     }
@@ -41,6 +42,7 @@ function UserProfile() {
           </div>
             <div className='break-words h-auto max-h-[400px] w-full overflow-hidden overflow-y-auto'>
                   {post.postText}
+                  <img src={post.author.photo}/>
                   <h3>@{post.author.name}</h3>
             </div>
         </div>

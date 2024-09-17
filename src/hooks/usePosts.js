@@ -14,13 +14,18 @@ export async function initializePosts() {
 }
 
 
-export function useFetchPost() {
+export function useFetchPost(isAuth) {
   const [postsList, setPostsList] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
-        const posts = await initializePosts();
-        setPostsList(posts);
+      console.log('detalhes',isAuth)
+        if(isAuth){
+          const posts = await initializePosts();
+          setPostsList(posts);
+        } else if(!isAuth) {
+          setPostsList([])
+        }
     };
 
     fetchPosts()

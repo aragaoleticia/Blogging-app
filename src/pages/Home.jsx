@@ -6,8 +6,7 @@ import CreatePostText from '../components/CreatPost';
 function Home() {
   const [isAuth] = useIsAuth();
 
-  const [postsList, setPostsList] = useFetchPost();
-
+  const [postsList, setPostsList] = useFetchPost(isAuth);
 
   return (
     <div className='w-full min-h-[calc(100vh-80px)] h-auto flex flex-col items-center'>

@@ -8,6 +8,7 @@ function CreatePostText({postsList, setPostsList}) {
     const [title, setTitle] = useState('');
     const [postText, setPostText] = useState('');
 
+    
     const submitPost = async (e) => {
         e.preventDefault();
         const post = {
@@ -15,9 +16,11 @@ function CreatePostText({postsList, setPostsList}) {
             postText,
             author: { 
                 name: auth.currentUser.displayName, 
-                id: auth.currentUser.uid
+                id: auth.currentUser.uid,
+                photo: auth.currentUser.photoURL
             }
         };
+        console.log(post.author.photo)
 
         try {
            const docRef = await addDoc(postsCollectionRef, post);

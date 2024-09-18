@@ -29,7 +29,7 @@ export function useFetchPost(isAuth) {
     };
 
     fetchPosts()
-  }, []);
+  }, [isAuth]);
 
   return [postsList, setPostsList]
 }

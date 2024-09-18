@@ -27,7 +27,7 @@ function CreatePostText({postsList, setPostsList}) {
 
            const newPost = {...post, id: docRef.id};
 
-           const newPosts = [...postsList, newPost]
+           const newPosts = [newPost,...postsList]
 
            setPostsList(newPosts); 
 
@@ -41,24 +41,25 @@ function CreatePostText({postsList, setPostsList}) {
     };
 
   return (
-    <div className='w-full grid items-center justify-center'>
-      <div className='w-[500px] h-auto p-5 bg-black rounded-lg text-white flex flex-col'>
-        <h1 className='text-center text-lg font-semibold'>Create a post</h1>
+    
+    <div className='w-full flex items-center justify-center py-10 px-4'>
+      <div className='w-full max-w-sm md:max-w-3xl p-6 bg-gray-100 rounded-lg shadow-lg'>
+        <h1 className='text-center text-xl font-semibold text-gray-800 mb-4'>What would you like to share? <span role='img' aria-label='speech-bubble'>💬</span></h1>
         <form onSubmit={submitPost}>
-        <div className='mt-[30px] flex flex-col'>
-                <label>Title:</label>
-                <input 
-                    className='text-[18px] border-none rounded-sm p-5 text-black' 
+        <div className='flex flex-col mb-5'>
+                <input
+                    required
+                    type='text' 
+                    className='border border-gray-300 bg-gray-100 rounded-md p-3 text-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-main focus:border-main' 
                     placeholder='Title...'
                     value={title || ''}
                     onChange={(event) => setTitle(event.target.value)}
                 />
             </div>
-            <div className='mt-[30px] flex flex-col'>
-                <label>Post:</label>
+            <div className='flex flex-col mb-4'>
                 <textarea 
-                    
-                    className='text-[18px] border-none rounded-sm p-5 text-black' 
+                    required
+                    className='border border-gray-300  bg-gray-100 rounded-md p-3 text-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-main focus:border-main' 
                     placeholder='Post...'
                     value={postText || ''}
                     onChange={(event) => setPostText(event.target.value)}
@@ -66,9 +67,9 @@ function CreatePostText({postsList, setPostsList}) {
             </div>
             <button 
                 type='submit'
-                className='mt-5 h-10 border-none rounded-sm cursor-pointer bg-slate-200 text-black text-lg font-semibold'
+                className='w-full bg-main text-white py-1 rounded-md text-lg font-semibold hover:bg-light-main hover:text-main transition duration-300 shadow-md hover:shadow-lg'
             >
-                Submit post
+                Submit
             </button>
             </form>
       </div>

@@ -1,33 +1,40 @@
 import React from 'react';
+import Spinner from '../components/Spinner';
+
 
 function Posts({postsList}) {
 
   
   if(postsList === null) {
-    return <div>Loading posts....</div>
+    return <Spinner massage='Loading'/>
   }
 
   if(postsList.length === 0) {
-    return <div>No posts available.</div>
+    return <Spinner massage='No pots available'/>
   }
   
 
   return (
-    <div>
-      {(postsList || []).map((post) => (
-        <div key={post.id} className='w-[600px] h-auto max-h-[600px] bg-gray-100 shadow-md m-5 p-5 rounded-lg'>
-          <div className='flex justify-center w-full'>
-            <div className='flex-[50%] text-2xl font-semibold'>
-              {post.title}
-            </div>
+    <div className='w-full max-w-lg md:max-w-3xl p-6'>
+    <div className='flex flex-col items-center'>
+      {postsList.map((post) => (
+      <div key={post.id} className='w-full m-5 p-5 rounded-lg bg-gray-100 shadow-lg'>
+        <div className='flex justify-start items-center mb-4'>
+          <div className='flex items-center'>
+          <img src={post.author.photo} alt='user profile'className='rounded-full w-12 h-12 md:w-16 md:h-16 shadow-xl object-cover mr-4'/>
           </div>
-            <div className='break-words h-auto max-h-[400px] w-full overflow-hidden overflow-y-auto'>
-                  {post.postText}
-                  <img src={post.author.photo}/>
-                  <h3>@{post.author.name}</h3>
-            </div>
+          <div>
+            <h3 className='text-lg font-semibold'>@{post.author.name}</h3>
+          </div>
         </div>
+        <div>
+          <h3 className='text-xl font-semibold mb-2'>{post.title}</h3>
+          <p className='text-gray-700 break-words mb-4 max-h-40 overflow-y-auto'>{post.postText}</p>
+        </div>
+         
+      </div>
       ))}
+    </div>
     </div>
   )
 }

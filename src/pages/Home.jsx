@@ -9,9 +9,11 @@ function Home() {
   const [postsList, setPostsList] = useFetchPost(isAuth);
 
   return (
-    <div className='w-full min-h-[calc(100vh-80px)] h-auto flex flex-col items-center'>
+    <div className='flex flex-col items-center justify-center min-h-screen py-10 px-4'>
+      <div className='py-8 px-4 bg-white rounded-lg'>
       {isAuth && <CreatePostText postsList={postsList} setPostsList={setPostsList} />}
       <Posts postsList={postsList}/>
+      </div>
     </div>
   )
 };

@@ -1,11 +1,10 @@
 import React from 'react';
-import { useIsAuth, useFetchPost, useDeletePost} from '../hooks/usePosts';
+import { useFetchPost, useDeletePost} from '../hooks/usePosts';
 import { auth } from '../firebase.config';
 import Spinner from '../components/Spinner';
 import iconDelete from '../assets/icon-delete.png';
 
-function UserProfile() {
-    const [isAuth] = useIsAuth();
+function UserProfile({isAuth}) {
     const [postsList, setPostsList] = useFetchPost(isAuth);
     const deletePost = useDeletePost(setPostsList);
 

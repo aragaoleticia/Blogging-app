@@ -19,7 +19,6 @@ export function useFetchPost(isAuth) {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      console.log('detalhes',isAuth)
         if(isAuth){
           const posts = await initializePosts();
           setPostsList(posts);
@@ -54,7 +53,7 @@ export function useDeletePost(setPostsList) {
 };
 
 
-export function useIsAuth() {
-    const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'));
-    return [isAuth, setIsAuth];
-};
+// export function useIsAuth() {
+//     const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'));
+//     return [isAuth, setIsAuth];
+// };

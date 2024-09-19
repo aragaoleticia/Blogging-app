@@ -20,7 +20,6 @@ function CreatePostText({postsList, setPostsList}) {
                 photo: auth.currentUser.photoURL
             }
         };
-        console.log(post.author.photo)
 
         try {
            const docRef = await addDoc(postsCollectionRef, post);

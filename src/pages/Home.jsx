@@ -1,10 +1,9 @@
 import React from 'react';
-import { useFetchPost, useIsAuth } from '../hooks/usePosts';
+import { useFetchPost } from '../hooks/usePosts';
 import Posts from '../components/Posts';
 import CreatePostText from '../components/CreatPost';
 
-function Home() {
-  const [isAuth] = useIsAuth();
+function Home({isAuth}) {
 
   const [postsList, setPostsList] = useFetchPost(isAuth);
 

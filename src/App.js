@@ -3,13 +3,14 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import { signOut } from 'firebase/auth';
 import { auth } from './firebase.config';
-import { useIsAuth, useFetchPost } from './hooks/usePosts'
+import { useFetchPost } from './hooks/usePosts'
 import UserProfile from './pages/UserProfile';
 import { useState } from 'react';
 
 function App() {
-  const [isAuth, setIsAuth] = useIsAuth();
+  const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'));
   const [postsList] = useFetchPost(isAuth);
+
 
   const [menuOpen, setMenuOpen] = useState(false);
 

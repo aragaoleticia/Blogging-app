@@ -3,15 +3,20 @@ import { getDocs, collection, deleteDoc, doc} from 'firebase/firestore';
 import { db } from '../firebase.config';
 
 
-
-
 const postsCollectionRef = collection(db, 'posts');
+
+export function newDateFromSeconds(seconds) {
+  const currentDate = new Date(0);
+  currentDate.setSeconds(seconds);
+  return currentDate;
+};
 
 export async function initializePosts() {
     const data = await getDocs(postsCollectionRef);
-    const posts = data.docs.map((doc) => ({...doc.data(), id: doc.id}))
+    const posts = data.docs.map((doc) => ({...doc.data(), id: doc.id, createdAt: newDateFromSeconds(doc._document.createTime.timestamp.seconds)}))
+      .sort((a,b) => b.createdAt - a.createdAt);
     return posts || [];
-}
+};
 
 
 export function useFetchPost(isAuth) {
@@ -31,7 +36,7 @@ export function useFetchPost(isAuth) {
   }, [isAuth]);
 
   return [postsList, setPostsList]
-}
+};
 
 
 

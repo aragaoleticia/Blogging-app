@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { collection, addDoc } from 'firebase/firestore';
 import { db, auth } from '../firebase.config';
 
+  
 function CreatePostText({postsList, setPostsList}) {
     const postsCollectionRef = collection(db, 'posts');
 
     const [title, setTitle] = useState('');
     const [postText, setPostText] = useState('');
+
 
     
     const submitPost = async (e) => {
@@ -17,14 +19,14 @@ function CreatePostText({postsList, setPostsList}) {
             author: { 
                 name: auth.currentUser.displayName, 
                 id: auth.currentUser.uid,
-                photo: auth.currentUser.photoURL
+                photo: auth.currentUser.photoURL,
             }
         };
 
         try {
            const docRef = await addDoc(postsCollectionRef, post);
 
-           const newPost = {...post, id: docRef.id};
+           const newPost = {...post, id: docRef.id, createdAt: new Date()};
 
            const newPosts = [newPost,...postsList]
 

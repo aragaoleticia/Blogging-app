@@ -1,8 +1,10 @@
 import React from 'react';
 import Spinner from '../components/Spinner';
+import { format } from 'date-fns';
 
 
 function Posts({postsList}) {
+
 
   
   if(postsList === null) {
@@ -31,7 +33,9 @@ function Posts({postsList}) {
           <h3 className='text-xl font-semibold mb-2'>{post.title}</h3>
           <p className='text-gray-700 break-words mb-4 max-h-40 overflow-y-auto'>{post.postText}</p>
         </div>
-         
+         <div>
+          {format(post.createdAt,'dd/MM/yyyy HH:mm')}
+         </div>
       </div>
       ))}
     </div>

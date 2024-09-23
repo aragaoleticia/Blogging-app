@@ -9,7 +9,7 @@ function Home({isAuth}) {
 
   return (
     <div className='flex flex-col items-center justify-center min-h-screen py-10 px-4'>
-      <div className='py-8 px-4 bg-white rounded-lg'>
+      <div className='w-full max-w-lg md:max-w-3xl py-8 px-4 bg-white rounded-lg'>
       {isAuth && <CreatePostText postsList={postsList} setPostsList={setPostsList} />}
       <Posts postsList={postsList}/>
       </div>

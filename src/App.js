@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { Routes, Route, Link, useNavigate, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import { signOut } from 'firebase/auth';
@@ -98,9 +98,9 @@ function App() {
           </nav>    
         }  
       <Routes>
-        <Route path='/' element={<Home isAuth={isAuth}/>} />
+        <Route path='/' element={isAuth ? <Home isAuth={isAuth}/> : <Navigate to='/login'/> } />
         <Route path='/profile' element={<UserProfile isAuth={isAuth}/>}/>
-        <Route path='/login' element={<Login setIsAuth={setIsAuth} />} />
+        <Route path='/login' element={isAuth ? <Navigate to='/'/> : <Login setIsAuth={setIsAuth} />} />
       </Routes>
     </div>
   );

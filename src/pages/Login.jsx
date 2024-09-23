@@ -1,4 +1,4 @@
-import React ,{ useEffect } from 'react';
+import React from 'react';
 import { auth, provider } from '../firebase.config';
 import { signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
@@ -7,23 +7,17 @@ import googleicon from '../assets/googleicon.svg';
 import postImg from '../assets/post-img.svg';
 
 
-function Login({ setIsAuth, isAuth }) {
+function Login({setIsAuth}) {
 
     let navigate = useNavigate();
 
     const signInWithGoogle = () => {
         signInWithPopup(auth, provider).then((result) => {
-            localStorage.setItem('isAuth', true);
-            setIsAuth(true);
+            localStorage.setItem('user', true);
+            setIsAuth(true)
             navigate('/');
         })
     }
-
-    useEffect(() => {
-        if(!isAuth){
-          navigate('/login')
-        }
-      }, [isAuth, navigate])
     
   return (
     <div className='flex flex-col lg:flex-row h-screen'>

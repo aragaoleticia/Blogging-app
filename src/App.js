@@ -1,22 +1,31 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import { signOut } from 'firebase/auth';
 import { auth } from './firebase.config';
-import { useFetchPost } from './hooks/usePosts'
+import { useFetchPost, fetchUser } from './hooks/usePosts'
 import UserProfile from './pages/UserProfile';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
-  const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'));
+  const [isAuth, setIsAuth] = useState(false);
   const [postsList] = useFetchPost(isAuth);
-
-
   const [menuOpen, setMenuOpen] = useState(false);
+  
+  let navigate = useNavigate();
+  
+  useEffect(() => {
+    const fetchAndSetUser = async () => {
+      const fetchedUser = await fetchUser();
+      setIsAuth(fetchedUser || false);
+      
+      if(!fetchedUser) navigate('/login');
+    }
 
-  const userPhoto = postsList.find((post) => 
-    post.author.id === auth.currentUser?.uid)?.author.photo;
-
+    fetchAndSetUser();
+  }, [navigate]);
+  
+  
   const signUserOut = () => {
     signOut(auth).then(() => {
       localStorage.clear();
@@ -24,12 +33,16 @@ function App() {
       window.location.pathname = '/login'
     })
   }
+  
+  const userPhoto = postsList.find((post) => 
+    post.author.id === auth.currentUser?.uid)?.author.photo;
+
 
   return (
-    <Router>
+    <div>
         {!isAuth ? 
-          <Link to='/login'></Link> 
-          : 
+          <Link to='/login'></Link>
+          :
           <nav className='w-full bg-white shadow-lg p-6 flex items-center justify-between'>
           <Link to='/profile' className='flex items-center gap-3'>
             <img 
@@ -82,14 +95,14 @@ function App() {
             </button>
             </div>
           )}
-          </nav>
-        }       
+          </nav>    
+        }  
       <Routes>
         <Route path='/' element={<Home isAuth={isAuth}/>} />
         <Route path='/profile' element={<UserProfile isAuth={isAuth}/>}/>
-        <Route path='/login' element={<Login setIsAuth={setIsAuth} isAuth={isAuth}/>} />
+        <Route path='/login' element={<Login setIsAuth={setIsAuth} />} />
       </Routes>
-    </Router>
+    </div>
   );
 }
 

@@ -1,18 +1,18 @@
 import React from 'react';
 import Spinner from '../components/Spinner';
+import NoPostsYet from './NoPostsYet';
 import { format } from 'date-fns';
 
 
-function Posts({postsList}) {
+function Posts({postsList, loadingPosts}) {
 
 
   
-  if(postsList === null) {
-    return <Spinner massage='Loading'/>
-  }
+  if(loadingPosts) {
+    return <Spinner/>
+  }else if(postsList.length === 0) {
+    return <NoPostsYet/>
 
-  if(postsList.length === 0) {
-    return <Spinner massage='No pots available'/>
   }
   
 

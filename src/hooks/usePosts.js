@@ -11,7 +11,8 @@ export function newDateFromSeconds(seconds) {
   return currentDate;
 };
 
-export async function initializePosts() {
+export async function initializePosts(setLoadingPosts) {
+    setLoadingPosts(true);
     const data = await getDocs(postsCollectionRef);
     const posts = data.docs.map((doc) => ({...doc.data(), id: doc.id, createdAt: newDateFromSeconds(doc._document.createTime.timestamp.seconds)}))
       .sort((a,b) => b.createdAt - a.createdAt);
@@ -21,21 +22,24 @@ export async function initializePosts() {
 
 export function useFetchPost(isAuth) {
   const [postsList, setPostsList] = useState([]);
+  const [loadingPosts, setLoadingPosts] = useState(true);
+
 
   useEffect(() => {
     const fetchPosts = async () => {
         if(isAuth){
-          const posts = await initializePosts();
+          const posts = await initializePosts(setLoadingPosts);
           setPostsList(posts);
         } else if(!isAuth) {
           setPostsList([])
         }
+        setLoadingPosts(false);
     };
 
-    fetchPosts()
+    fetchPosts();
   }, [isAuth]);
 
-  return [postsList, setPostsList]
+  return [postsList, setPostsList, loadingPosts ,setLoadingPosts]
 };
 
 

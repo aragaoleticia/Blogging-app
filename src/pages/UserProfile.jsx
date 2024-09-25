@@ -1,11 +1,14 @@
 import React from 'react';
 import { useFetchPost, useDeletePost} from '../hooks/usePosts';
 import { auth } from '../firebase.config';
-import Spinner from '../components/Spinner';
 import iconDelete from '../assets/icon-delete.png';
+import { format } from 'date-fns';
+import Spinner from '../components/Spinner';
+import NoPostsYet from '../components/NoPostsYet';
+
 
 function UserProfile({isAuth}) {
-    const [postsList, setPostsList] = useFetchPost(isAuth);
+    const [postsList, setPostsList, loadingPosts] = useFetchPost(isAuth);
     const deletePost = useDeletePost(setPostsList);
 
 
@@ -13,14 +16,19 @@ function UserProfile({isAuth}) {
         ? postsList.filter((post) => post.author.id === auth.currentUser.uid)
         : [];
 
-
-    if(userPosts.length === 0) {
-      return <Spinner massage='No pots available'/>
+    if(loadingPosts) {
+      return <Spinner/>
     }
+    
+  
+
   return (
-    <div className='flex items-center justify-center min-h-screen py-10 px-4'>
+    <div className='flex items-center justify-center h-auto py-10 px-4'>
       <div className='w-full max-w-lg md:max-w-3xl bg-white shadow-lg p-6 rounded-lg'>
-        <h2 className='text-gray-800 bg-main text-xl md:text-2xl shadow-md font-bold text-center mb-6'>See what you've posted <span role='img' aria-label='speech-bubble'>📎</span></h2>
+        {userPosts.length === 0 ? <NoPostsYet/> 
+          :
+          <h2 className='text-gray-800 bg-main text-xl md:text-2xl shadow-md font-bold text-center mb-6'>See what you've posted <span role='img' aria-label='speech-bubble'>📎</span></h2>
+        }
       <div className='flex flex-col items-center'>
         {userPosts.map((post) => (
         <div key={post.id} className='w-full m-5 p-5 rounded-lg bg-gray-100 shadow-md'>
@@ -44,6 +52,7 @@ function UserProfile({isAuth}) {
             <h3 className='text-xl font-semibold mb-2'>{post.title}</h3>
             <p className='text-gray-700 break-words mb-4 max-h-40 overflow-y-auto'>{post.postText}</p>
           </div>
+          {format(post.createdAt,'dd/MM/yyyy HH:mm')}
            
         </div>
         ))}

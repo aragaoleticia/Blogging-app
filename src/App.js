@@ -6,11 +6,15 @@ import { auth } from './firebase.config';
 import { useFetchPost, fetchUser } from './hooks/usePosts'
 import UserProfile from './pages/UserProfile';
 import { useState, useEffect } from 'react';
+import avatarIcon from './assets/avatar.jpg';
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
   const [postsList] = useFetchPost(isAuth);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const userPhoto = postsList.find((post) => 
+    post.author.id === auth.currentUser?.uid)?.author.photo;
   
   let navigate = useNavigate();
   
@@ -34,8 +38,6 @@ function App() {
     })
   }
   
-  const userPhoto = postsList.find((post) => 
-    post.author.id === auth.currentUser?.uid)?.author.photo;
 
 
   return (
@@ -46,7 +48,7 @@ function App() {
           <nav className='w-full bg-white shadow-lg p-6 flex items-center justify-between'>
           <Link to='/profile' className='flex items-center gap-3'>
             <img 
-              src={userPhoto} 
+              src={userPhoto || avatarIcon} 
               alt='user profile' 
               className='rounded-full w-12 h-12 shadow-md object-cover'
             />
